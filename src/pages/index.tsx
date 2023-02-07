@@ -72,7 +72,7 @@ export default function Home() {
 			<StyledHeader role="banner" className={'app__header'} aria-labelledby='header__description'>
 				<h2 className='header__description hidden'> Navigation links pertaining to the various sections of the page. </h2>
 					<a className="menu__anchor" href="/#" title='Scroll to Top'>
-						<h3>Nodes & Links</h3>
+						<h3>N & L</h3>
 					</a>
 					<nav className="header__nav">
 						<ul className="nav__menu">
@@ -91,7 +91,7 @@ export default function Home() {
 				<h2 className='hero__description hidden' id="hero__description"> Presentational hero section</h2>
 				<article className="hero__cta">
 					<div role="presentation" className="cta__content">
-						<h1 className="hero__title">Welcome to my Nodes & Links Demo project</h1>
+						<h1 className="hero__title">Welcome to my demo project</h1>
 						<h3 className="hero__body"> Feel free to explore the below form to generate a graph! <form action="" className=""></form></h3>
 					</div>
 				</article>
