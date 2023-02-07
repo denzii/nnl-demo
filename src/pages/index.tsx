@@ -1,3 +1,4 @@
+declare var dataLayer: any[];
 
 import { Inter } from '@next/font/google'
 import { useEffect, useState } from 'react'
@@ -11,6 +12,8 @@ import { StyledFooter } from '@/style/footer.style'
 import  GlobalStyle from '@/style/global.style'
 import Papa from 'papaparse'
 import { mapToGraphData, resolveNodeDependencies, sortNodes } from '@/dfs'
+import Head from 'next/head'
+
 
 export type Link = {
 	[key: number]: 0 | 1
@@ -49,8 +52,7 @@ export default function Home() {
 		if (!parsedFiles.links || !parsedFiles.nodes) return;
 		const nodesWithDeps = resolveNodeDependencies(parsedFiles.nodes, parsedFiles.links);
 		const sortedNodes = sortNodes(nodesWithDeps);
-		// const graphData = mapToGraphData(sortedNodes);
-		// setGraphData(graphData);
+
     console.log("Calling fetch");
     fetch('/api/import-data', {
       method: 'POST',
@@ -67,6 +69,16 @@ export default function Home() {
 	}, [parsedFiles])
 
 	return <>
+    <Head>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-9SCMYM22Y5"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments)}
+        gtag('js', new Date());
+
+        gtag('config', 'G-9SCMYM22Y5');
+      </script>
+    </Head>
   	<GlobalStyle />
 		<div className="app">
 			<StyledHeader role="banner" className={'app__header'} aria-labelledby='header__description'>
