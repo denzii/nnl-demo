@@ -13,7 +13,7 @@ import  GlobalStyle from '@/style/global.style'
 import Papa from 'papaparse'
 import { mapToGraphData, resolveNodeDependencies, sortNodes } from '@/dfs'
 import Head from 'next/head'
-
+import { event } from '@/lib/ga'
 
 export type Link = {
 	[key: number]: 0 | 1
@@ -69,16 +69,6 @@ export default function Home() {
 	}, [parsedFiles])
 
 	return <>
-    <Head>
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-9SCMYM22Y5"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments)}
-        gtag('js', new Date());
-
-        gtag('config', 'G-9SCMYM22Y5');
-      </script>
-    </Head>
   	<GlobalStyle />
 		<div className="app">
 			<StyledHeader role="banner" className={'app__header'} aria-labelledby='header__description'>
@@ -115,21 +105,25 @@ export default function Home() {
 				: <StyledForm>
 						<div>
 							<label htmlFor="nodesFile">Nodes File:</label>
-							<input type="file" id="nodesFile" name="nodesFile" accept=".csv" onChange={
-									(e) => setFormState(s => ({...s, nodes: e.target.files![0]}))
-								} 
+							<input type="file" id="nodesFile" name="nodesFile" accept=".csv" onChange={(e) => {
+                setFormState(s => ({...s, nodes: e.target.files![0]}))
+                event({action:"addNodesFile", params:{search_term:"NodesFileUpload"}})
+              }} 
 							/>
 						</div>
 						<div>
 							<label htmlFor="adjMatrixFile">Adjacency Matrix File:</label>
-							<input type="file" id="adjMatrixFile" name="adjMatrixFile" accept=".csv" onChange={
-									(e) => setFormState(s => ({...s, links: e.target.files![0]}))
+							<input type="file" id="adjMatrixFile" name="adjMatrixFile" accept=".csv" onChange={(e) => {
+                    setFormState(s => ({...s, links: e.target.files![0]}))
+                    event({action:"addMatrixFile", params:{search_term:"MatrixFileUpload"}})
+                  }
 								}
 							/>
 						</div>
 						<button type="submit" onClick={(e) => {
 							e.preventDefault();
 							handleParse();
+              event({action:"submitForm", params:{search_term:"FormSubmit"}})
 						}}>
 							Submit
 						</button>
