@@ -7,7 +7,7 @@ A live version could be found at https://nnl-demo-denzii.vercel.app/
 - CSV Uploads for Adjacency Matrix & Activity Data
 - Graph generation for demonstrating relations / chronology & duration
 - Responsive Design (Best experience on desktop & mobile as a fallback)
-- Google Analytics instrumentation added in, however unstable
+- Google Analytics instrumentation added in, however possibly still in waiting period and pending so it does not work
 ## Authors
 
 - Development & Devops by [@denzii](https://github.com/denzii)

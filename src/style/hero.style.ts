@@ -26,7 +26,11 @@ export const StyledHero = styled.section`
             flex-direction: column;
             justify-content: center;
         }
+        & .hero__supplementary{
+        color: white;
     }
+    }
+
     & h1, h2, h3{
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         z-index: 1;

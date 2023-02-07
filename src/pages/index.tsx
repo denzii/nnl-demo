@@ -1,4 +1,3 @@
-declare var dataLayer: any[];
 
 import { Inter } from '@next/font/google'
 import { useEffect, useState } from 'react'
@@ -12,8 +11,7 @@ import { StyledFooter } from '@/style/footer.style'
 import  GlobalStyle from '@/style/global.style'
 import Papa from 'papaparse'
 import { mapToGraphData, resolveNodeDependencies, sortNodes } from '@/dfs'
-import Head from 'next/head'
-import { event } from '@/lib/ga'
+import { event as sendAnalyticsEvent } from '@/lib/ga'
 
 export type Link = {
 	[key: number]: 0 | 1
@@ -23,7 +21,6 @@ export type Node = {
 	StartDate: string, 
 	EndDate: string
 }
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
 
@@ -65,7 +62,6 @@ export default function Home() {
     .then((data) => {
       setGraphData(data)
     })
-
 	}, [parsedFiles])
 
 	return <>
@@ -94,7 +90,14 @@ export default function Home() {
 				<article className="hero__cta">
 					<div role="presentation" className="cta__content">
 						<h1 className="hero__title">Welcome to my demo project</h1>
-						<h3 className="hero__body"> Feel free to explore the below form to generate a graph! <form action="" className=""></form></h3>
+						<h3 className="hero__body"> 
+              Feel free to explore the below form to generate a graph!
+            </h3>
+            <ol className='hero__supplementary'>
+              <li> The graph will be generated using a Depth First Search</li>
+              <li> Includes colour coding for chronology as well as relative circle sizing to signify date range lengths </li>
+              <li> The graph data will be stored in MongoDB Atlas Cloud</li>
+            </ol>
 					</div>
 				</article>
 			</StyledHero>
@@ -107,7 +110,7 @@ export default function Home() {
 							<label htmlFor="nodesFile">Nodes File:</label>
 							<input type="file" id="nodesFile" name="nodesFile" accept=".csv" onChange={(e) => {
                 setFormState(s => ({...s, nodes: e.target.files![0]}))
-                event({action:"addNodesFile", params:{search_term:"NodesFileUpload"}})
+                sendAnalyticsEvent({action:"addNodesFile", params:{search_term:"NodesFileUpload"}})
               }} 
 							/>
 						</div>
@@ -115,7 +118,7 @@ export default function Home() {
 							<label htmlFor="adjMatrixFile">Adjacency Matrix File:</label>
 							<input type="file" id="adjMatrixFile" name="adjMatrixFile" accept=".csv" onChange={(e) => {
                     setFormState(s => ({...s, links: e.target.files![0]}))
-                    event({action:"addMatrixFile", params:{search_term:"MatrixFileUpload"}})
+                    sendAnalyticsEvent({action:"addMatrixFile", params:{search_term:"MatrixFileUpload"}})
                   }
 								}
 							/>
@@ -123,7 +126,7 @@ export default function Home() {
 						<button type="submit" onClick={(e) => {
 							e.preventDefault();
 							handleParse();
-              event({action:"submitForm", params:{search_term:"FormSubmit"}})
+              sendAnalyticsEvent({action:"submitForm", params:{search_term:"FormSubmit"}})
 						}}>
 							Submit
 						</button>
